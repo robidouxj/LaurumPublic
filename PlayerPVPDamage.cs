@@ -262,16 +262,20 @@ public class PlayerPVPDamage : NetworkBehaviour
         PlayerStats fromPlayerStats = fromPlayer.GetComponent<PlayerStats>();
         float playerTotalDef = 0;
         float fromPlayerDamage = 0;
-        float nerfDamage = 0.35f;
+        float nerfDamage = 0.25f;
+        float pvpPdefBonus = (PlayerStats.Defense_str - PlayerStats.PlayerEquipStats[5])
+        float pvpMdefBonus = (PlayerStats.Defense_int - PlayerStats.PlayerEquipStats[6])
 
         switch (fromPlayerStats.DamageType_now)
         {
             case PlayerStats.DamageType.magical:
                 playerTotalDef = PlayerStats.Defense_int + (PlayerStats.Defense_str * 0.2f);
+                playerTotalDef += pvpMdefBonus
                 fromPlayerDamage = fromPlayerStats.Damage_int;
                 break;
             case PlayerStats.DamageType.physical:
                 playerTotalDef = PlayerStats.Defense_str + (PlayerStats.Defense_int * 0.2f);
+                playerTotalDef += pvpPdefBonus
                 fromPlayerDamage = fromPlayerStats.Damage_str;
                 break;
             default:
